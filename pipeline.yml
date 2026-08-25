@@ -1,0 +1,34 @@
+name: CI/CD Pipeline Basico
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Ejecutar pruebas unitarias
+        run: |
+          python -m unittest test_main.py
+
+      - name: Despliegue simulado
+        run: |
+          echo "=========================================="
+          echo "¡Todas las pruebas pasaron exitosamente!"
+          echo "Iniciando despliegue simulado..."
+          mkdir -p staging
+          cp main.py staging/
+          echo "Despliegue exitoso: archivos copiados a staging."
+          echo "=========================================="
